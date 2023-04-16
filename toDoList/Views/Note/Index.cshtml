@@ -1,0 +1,28 @@
+﻿@model List<toDoList.Models.Note>
+
+<table>
+    <tr>
+        <td>Виконано</td>
+        <td>Задача</td>
+        <td>Категорія</td>
+        <td>Дата</td>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            @if (item.Status)
+            { 
+                <td style="color: green">&check;</td>
+            }
+            else
+            {
+                <td style="color: red">&cross;</td>
+            }
+
+        <td>@item.Name</td>
+        <td>@item.CategoryId</td>
+        <td>@item.FinalDate</td>
+        <td><button>Виконав</button></td>
+        </tr>
+    }
+</table>

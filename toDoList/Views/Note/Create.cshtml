@@ -1,0 +1,14 @@
+﻿@model List<toDoList.Models.Category>
+
+@using (Html.BeginForm("Create", "Note", FormMethod.Post))
+{
+    @Html.TextBox("Name", "Купити молоко")
+    <select name="category">
+        @foreach (var item in Model)
+        {
+            <option value="@item.Name">@item.Name</option>
+        }
+    </select>
+    @Html.TextBox("FinalDate", "", new {type="date"})
+    <button>Додати</button>
+}
