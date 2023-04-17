@@ -21,6 +21,7 @@
 
         <td>@item.Name</td>
         <td>@item.CategoryId</td>
+        <td>@item.FinalDate</td>
         <td>
              <a asp-controller="Note" asp-action="Completed" asp-route-Status="@item.Status" asp-route-Id="@item.Id">Виконано</a>
         </td>
