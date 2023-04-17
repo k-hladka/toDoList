@@ -2,10 +2,10 @@
 
 <table>
     <tr>
-        <td>Виконано</td>
-        <td>Задача</td>
-        <td>Категорія</td>
-        <td>Дата</td>
+        <td><a asp-controller="Note" asp-action="Index" asp-route-sort="true" asp-route-FieldName="Status">Виконано</a></td>
+        <td><a asp-controller="Note" asp-action="Index" asp-route-sort="true" asp-route-FieldName="Name">Задача</a></td>
+        <td><a asp-controller="Note" asp-action="Index" asp-route-sort="true" asp-route-FieldName="CategoryId">Категорія</a></td>
+        <td><a asp-controller="Note" asp-action="Index" asp-route-sort="true" asp-route-FieldName="FinalDate">Дата</a></td>
     </tr>
     @foreach (var item in Model)
     {
@@ -21,8 +21,9 @@
 
         <td>@item.Name</td>
         <td>@item.CategoryId</td>
-        <td>@item.FinalDate</td>
-        <td><button>Виконав</button></td>
+        <td>
+             <a asp-controller="Note" asp-action="Completed" asp-route-Status="@item.Status" asp-route-Id="@item.Id">Виконано</a>
+        </td>
         </tr>
     }
 </table>

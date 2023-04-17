@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Data.SqlTypes;
 using toDoList.Models;
 
 namespace toDoList.Controllers
@@ -13,13 +12,18 @@ namespace toDoList.Controllers
         {
             _repository = repository;
         }
-        public ActionResult Index()
+        public ActionResult Index(bool sort=false, string FieldName="")
         {
-            return View(_repository.GetNotes());
+            var result = _repository.GetNotes();
+            if (sort)
+            {
+                result = _repository.Sort(FieldName);
+            }
+            return View(result);
         }
         public IActionResult Create()
          {
-             return View(_repository.GetCategory());
+             return View(_repository.GetCategories());
          }
 
          [HttpPost]
@@ -28,5 +32,10 @@ namespace toDoList.Controllers
              _repository.Create(note, category);
              return RedirectToAction("Create");
          }
+        public IActionResult Completed(bool status, int id)
+        {
+            _repository.Completed(status, id);
+            return RedirectToAction("Index");
+        }
     }
 }

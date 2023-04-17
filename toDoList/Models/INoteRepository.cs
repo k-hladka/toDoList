@@ -3,7 +3,9 @@
     public interface INoteRepository
     {
         void Create(Note note, string category);
-        List<Note> GetNotes();
-        List<Category> GetCategory();
+        void Completed(bool status, int id);
+        List<Note> Sort(string FieldName);
+        List<Note> GetNotes(string sqlString = "SELECT * FROM Notes");
+        List<Category> GetCategories();
     }
 }
