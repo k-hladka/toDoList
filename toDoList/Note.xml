@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<notes>
+  <note>
+    <id>1</id>
+    <status>True</status>
+    <name>Купити молоко</name>
+    <categoryId>2</categoryId>
+    <finalDate>
+    </finalDate>
+  </note>
+  <note>
+    <id>2</id>
+    <status>False</status>
+    <name>Купити молоко</name>
+    <categoryId>1</categoryId>
+    <finalDate>
+    </finalDate>
+  </note>
+  <note>
+    <id>3</id>
+    <status>False</status>
+    <name>Купити корову</name>
+    <categoryId>1</categoryId>
+    <finalDate>26.05.2023 00:00:00</finalDate>
+  </note>
+  <note>
+    <id>4</id>
+    <status>False</status>
+    <name>Купити козу</name>
+    <categoryId>3</categoryId>
+    <finalDate>12.05.2023 00:00:00</finalDate>
+  </note>
+</notes>

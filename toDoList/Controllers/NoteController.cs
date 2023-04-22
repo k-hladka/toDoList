@@ -27,14 +27,19 @@ namespace toDoList.Controllers
          }
 
          [HttpPost]
-         public IActionResult Create(Note note, string category)
+         public IActionResult Create(Note note, string category, string typeStorage)
          {
-             _repository.Create(note, category);
+             _repository.Create(note, category, typeStorage);
              return RedirectToAction("Create");
          }
         public IActionResult Completed(bool status, int id)
         {
             _repository.Completed(status, id);
+            return RedirectToAction("Index");
+        }
+        public IActionResult CompletedXml(bool status, int id)
+        {
+            _repository.CompletedXml(status, id);
             return RedirectToAction("Index");
         }
     }

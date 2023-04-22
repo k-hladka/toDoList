@@ -2,6 +2,10 @@
 
 @using (Html.BeginForm("Create", "Note", FormMethod.Post))
 {
+    <select name="typeStorage">
+        <option asp-controller="Note" asp-action="Create" value="sql">Sql</option>
+        <option asp-controller="Note" asp-action="CreateXml" value="xml">Xml</option>
+    </select>
     @Html.TextBox("Name", "Купити молоко")
     <select name="category">
         @foreach (var item in Model)
