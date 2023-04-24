@@ -99,7 +99,7 @@ namespace toDoList.Models
 
             }
 
-            XmlElement finalDate = xmlDocument.CreateElement("finalDate");
+            XmlElement finalDate = xmlDocument.CreateElement("FinalDate");
             XmlText finalDateText = xmlDocument.CreateTextNode(note.FinalDate.ToString());
             finalDate.AppendChild(finalDateText);
 
