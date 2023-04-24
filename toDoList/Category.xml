@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<category>
-  <categoryChild>
-    <id>1</id>
-    <name>Особисте</name>
-  </categoryChild>
-  <categoryChild>
-    <id>2</id>
-    <name>Покупки</name>
-  </categoryChild>
-  <categoryChild>
-    <id>3</id>
-    <name>Робота</name>
-  </categoryChild>
-</category>
+<Сategory>
+  <СategoryChild>
+    <Id>1</Id>
+    <Name>Особисте</Name>
+  </СategoryChild>
+  <СategoryChild>
+    <Id>2</Id>
+    <Name>Покупки</Name>
+  </СategoryChild>
+  <СategoryChild>
+    <Id>3</Id>
+    <Name>Робота</Name>
+  </СategoryChild>
+</Сategory>

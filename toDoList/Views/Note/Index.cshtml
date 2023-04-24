@@ -1,98 +1,29 @@
-﻿@using System.Xml;
-@using Microsoft.AspNetCore.Http.Features;
-@model List<toDoList.Models.Note>
-@using(Html.BeginForm("Index", "Note", FormMethod.Post)){
-    <button type="submit" value="sql" name="typeStorage">Sql</button>
-    <button type="submit" value="xml" name="typeStorage">Xml</button>
-}
-@{
-    string typeStorage = "sql";
-    if (Context.Request.Method == "POST" && Context.Features.Get<IFormFeature>()?.Form != null)
-    {
-        typeStorage = (Context.Request.Form["typeStorage"] == "sql") ? "sql" : "xml";
-    }
-}
+﻿@model List<Note>
 <table>
     <tr>
-        <td><a asp-controller="Note" asp-action="Index" asp-route-sort="true" asp-route-FieldName="Status" asp-route-type="@typeStorage">Виконано</a></td>
-        <td><a asp-controller="Note" asp-action="Index" asp-route-sort="true" asp-route-FieldName="Name" asp-route-type="@typeStorage">Задача</a></td>
-        <td><a asp-controller="Note" asp-action="Index" asp-route-sort="true" asp-route-FieldName="CategoryId" asp-route-type="@typeStorage">Категорія</a></td>
-        <td><a asp-controller="Note" asp-action="Index" asp-route-sort="true" asp-route-FieldName="FinalDate" asp-route-type="@typeStorage">Дата</a></td>
+        <td><a asp-controller="Note" asp-action="Index" asp-route-FieldName="Status" asp-route-sort="true">Виконано</a></td>
+        <td><a asp-controller="Note" asp-action="Index" asp-route-FieldName="Name" asp-route-sort="true">Задача</a></td>
+        <td><a asp-controller="Note" asp-action="Index" asp-route-FieldName="CategoryId" asp-route-sort="true">Категорія</a></td>
+        <td><a asp-controller="Note" asp-action="Index" asp-route-FieldName="FinalDate" asp-route-sort="true">Дата</a></td>
     </tr>
-    @if(typeStorage == "sql")
-        @foreach (var item in Model)
-        {
-            <tr>
-                @if (item.Status)
-                { 
-                    <td style="color: green">&check;</td>
-                }
-                else
-                {
-                    <td style="color: red">&cross;</td>
-                }
-
-            <td>@item.Name</td>
-            <td>@item.CategoryId</td>
-            <td>@item.FinalDate</td>
-            <td>
-                 <a asp-controller="Note" asp-action="Completed" asp-route-Status="@item.Status" asp-route-Id="@item.Id" asp-route-type="sql">Виконано</a>
-            </td>
-            </tr>
-        }
-
-    else
+    @foreach (var item in Model)
     {
-        XmlDocument xmlDocument = new XmlDocument();
-        xmlDocument.Load("Note.xml");
-        XmlElement root = xmlDocument.DocumentElement;
-        string routeStatus = "False";
-        string id = "1";
-        @foreach (XmlElement element in root)
-        { 
-            <tr>
-                @foreach(XmlNode child in element.ChildNodes)
-                {
-                    @if (child.Name == "id")
-                    {
-                        id = child.InnerText;
-                    }
-                    @if(child.Name == "status")
-                    {
-                        @if (child.InnerText == "True")
-                        {
-                            <td style="color: green">&check;</td>
-                        }
-                        else if (child.InnerText == "False")
-                        {
-                            <td style="color: red">&cross;</td>
-                        }
-                        routeStatus = child.InnerText;
-                    }
-                    
-                    @if (child.Name == "name")
-                    {
-                            <td>@child.InnerText</td>
-                    }
-                    @if (child.Name == "categoryId")
-                    {
-                            <td>@child.InnerText</td>
-                    }
-                    @if (child.Name == "finalDate")
-                    {
-                        <td>@child.InnerText</td>
-                    }
-                    
-                    @if (child.Name == "finalDate")
-                    {
-                        <td>
-                            <a asp-controller="Note" asp-action="CompletedXml" asp-route-Status="@routeStatus" asp-route-Id="@id" asp-route-type="xml" target="">Виконано</a>
-                        </td>
-                    }
-                }
-            </tr>
-        }
-        
+        <tr>
+            @if (item.Status)
+            { 
+                <td style="color: green">&check;</td>
+            }
+            else
+            {
+                <td style="color: red">&cross;</td>
+            }
+
+        <td>@item.Name</td>
+        <td>@item.CategoryId</td>
+        <td>@item.FinalDate</td>
+        <td>
+                <a asp-controller="Note" asp-action="Completed" asp-route-Status="@item.Status" asp-route-Id="@item.Id">Виконано</a>
+        </td>
+        </tr>
     }
-    
 </table>

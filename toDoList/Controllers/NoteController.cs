@@ -12,7 +12,16 @@ namespace toDoList.Controllers
         {
             _repository = repository;
         }
-        public ActionResult Index(bool sort=false, string FieldName="")
+        public ActionResult Index(bool sort = false, string FieldName = "")
+        {
+            var result = _repository.GetNotes();
+            if (sort)
+            {
+                result = _repository.Sort(FieldName);
+            }
+            return View(result);
+        }
+        public ActionResult IndexXml(bool sort = false, string FieldName = "")
         {
             var result = _repository.GetNotes();
             if (sort)
@@ -22,16 +31,16 @@ namespace toDoList.Controllers
             return View(result);
         }
         public IActionResult Create()
-         {
-             return View(_repository.GetCategories());
-         }
+        {
+            return View(_repository.GetCategories());
+        }
 
-         [HttpPost]
-         public IActionResult Create(Note note, string category, string typeStorage)
-         {
-             _repository.Create(note, category, typeStorage);
-             return RedirectToAction("Create");
-         }
+        [HttpPost]
+        public IActionResult Create(Note note, string category, string typeStorage)
+        {
+            _repository.Create(note, category, typeStorage);
+            return RedirectToAction("Create");
+        }
         public IActionResult Completed(bool status, int id)
         {
             _repository.Completed(status, id);
@@ -40,7 +49,7 @@ namespace toDoList.Controllers
         public IActionResult CompletedXml(bool status, int id)
         {
             _repository.CompletedXml(status, id);
-            return RedirectToAction("Index");
+            return RedirectToAction("IndexXml");
         }
     }
 }

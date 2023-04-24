@@ -13,7 +13,7 @@ namespace toDoList.Models
         {
             this._connectionString = connectionString;
         }
-        public List<Note> GetNotes(string sqlString="")
+        public List<Note> GetNotes(string sqlString = "")
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
@@ -29,11 +29,11 @@ namespace toDoList.Models
         }
         public void Create(Note note, string category, string typeStorage)
         {
-            if(typeStorage == "sql")
+            if (typeStorage == "sql")
                 using (IDbConnection db = new SqlConnection(_connectionString))
                 {
                     var sqlQuery = "INSERT INTO Notes (Name, FinalDate, Status, CategoryId) VALUES(@Name, @FinalDate, @Status, (SELECT Id FROM Category WHERE Name = @category))";
-                    db.Execute(sqlQuery, new { Name = note.Name, FinalDate = note.FinalDate, Status = note.Status,  category });
+                    db.Execute(sqlQuery, new { Name = note.Name, FinalDate = note.FinalDate, Status = note.Status, category });
                 }
             else
             {
@@ -46,56 +46,57 @@ namespace toDoList.Models
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
                 var sqlQuery = "UPDATE Notes SET Status = @Status WHERE Id = @Id";
-                db.Execute(sqlQuery, new {Status = !status, Id = id});
+                db.Execute(sqlQuery, new { Status = !status, Id = id });
             }
         }
         public List<Note> Sort(string FieldName)
         {
             return GetNotes($"SELECT * FROM Notes ORDER BY {FieldName}");
         }
-        public void CreateXml(Note note, string category) {
+        public void CreateXml(Note note, string category)
+        {
             XmlDocument xmlDocument = new XmlDocument();
             xmlDocument.Load("Note.xml");
             XmlElement root = xmlDocument.DocumentElement;
 
-            var idNote = int.Parse(root.LastChild.SelectSingleNode("id").InnerText);
+            var idNote = int.Parse(root.LastChild.SelectSingleNode("Id").InnerText);
             idNote++;
 
             XmlDocument xmlCategory = new XmlDocument();
             xmlCategory.Load("Category.xml");
             XmlElement rootCategory = xmlCategory.DocumentElement;
 
-            XmlElement noteElem = xmlDocument.CreateElement("note");
+            XmlElement noteElem = xmlDocument.CreateElement("Note");
 
-            XmlElement status = xmlDocument.CreateElement("status");
+            XmlElement status = xmlDocument.CreateElement("Status");
             XmlText statusText = xmlDocument.CreateTextNode(note.Status.ToString());
             status.AppendChild(statusText);
 
-            XmlElement idElem = xmlDocument.CreateElement("id");
+            XmlElement idElem = xmlDocument.CreateElement("Id");
             XmlText idText = xmlDocument.CreateTextNode(idNote.ToString());
             idElem.AppendChild(idText);
 
-            XmlElement name = xmlDocument.CreateElement("name");
+            XmlElement name = xmlDocument.CreateElement("Name");
             XmlText nameText = xmlDocument.CreateTextNode(note.Name);
             name.AppendChild(nameText);
 
-            XmlElement categoryId = xmlDocument.CreateElement("categoryId");
+            XmlElement categoryId = xmlDocument.CreateElement("CategoryId");
             string idCatergory = String.Empty;
             foreach (XmlNode child in rootCategory.ChildNodes)
             {
-                foreach(XmlNode childNode in child.ChildNodes)
+                foreach (XmlNode childNode in child.ChildNodes)
                 {
-                    if (childNode.Name == "name" && childNode.InnerText == category)
+                    if (childNode.Name == "Name" && childNode.InnerText == category)
                     {
                         XmlText categoryIdText = xmlDocument.CreateTextNode(idCatergory);
                         categoryId.AppendChild(categoryIdText);
                     }
-                    if (childNode.Name == "id")
+                    if (childNode.Name == "Id")
                     {
                         idCatergory = childNode.InnerText;
                     }
                 }
-                
+
             }
 
             XmlElement finalDate = xmlDocument.CreateElement("finalDate");
@@ -107,7 +108,7 @@ namespace toDoList.Models
             noteElem.AppendChild(name);
             noteElem.AppendChild(categoryId);
             noteElem.AppendChild(finalDate);
-            
+
             root.AppendChild(noteElem);
             xmlDocument.Save("Note.xml");
         }
@@ -122,9 +123,9 @@ namespace toDoList.Models
             {
                 foreach (XmlNode childNode in child.ChildNodes)
                 {
-                    if (childNode.Name == "id" && childNode.InnerText == id.ToString())
+                    if (childNode.Name == "Id" && childNode.InnerText == id.ToString())
                         check = true;
-                    if (childNode.Name == "status" && check)
+                    if (childNode.Name == "Status" && check)
                     {
                         childNode.InnerText = (!bool.Parse(childNode.InnerText)).ToString();
                         check = false;
